@@ -1,9 +1,15 @@
 import dotenv from "dotenv";
-dotenv.config();
 import express from "express";
 import products from "./data/products.js";
 import cors from "cors";
+import connectDB from "./config/db.js";
+import productRoutes from "./routes/productRoutes.js"
+import { errorHandler, notFound } from "./middleware/errorMiddleWare.js";
+
+dotenv.config();
+connectDB();
 // const port = 5000;
+
 const port = process?.env?.PORT || 5000;
 const app = express();
 app.use(cors());
@@ -12,18 +18,8 @@ app.get("/", (req, res) => {
   res.send("API is Running...");
 });
 
-app.get("/products", (req, res) => {
-  res.json(products);
-});
-
-app.get("/api/products", (req, res) => {
-  res.json(products);
-});
-
-app.get("/api/products/:id", (req, res) => {
-  const id = req.params.id;
-  const product = products?.find((product) => product?._id === id);
-  res.json(product);
-});
+app.use("/api/products", productRoutes);
+app.use(notFound);
+app.use(errorHandler);
 
 app.listen(port, () => console.log(`Server is running on the port: ${port}`));
