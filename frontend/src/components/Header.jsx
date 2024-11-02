@@ -12,9 +12,8 @@ import logo from '../assets/logo.png';
 import { LinkContainer } from 'react-router-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLoginMutation, useLogoutMutation } from 'slices/usersApiSlice';
-import { setCredentionals } from 'slices/authSlice';
+import { logout, setCredentionals } from 'slices/authSlice';
 import { useNavigate } from 'react-router-dom';
-import logout from 'slices/authSlice';
 
 export default function Header() {
 	const { cartItems } = useSelector((store) => store?.cart);
@@ -26,14 +25,15 @@ export default function Header() {
 
 	const logoutHandler = async () => {
 		try {
-			await logoutAPICall().unwrap();
+			localStorage.removeItem('userInfo');
+			localStorage.removeItem('cart');
 			navigate('/login');
 			dispatch(logout());
+			await logoutAPICall().unwrap();
 		} catch (error) {
 			console.log(error);
 		}
 	};
-
 	return (
 		<header>
 			<Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect>
