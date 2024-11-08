@@ -9,27 +9,27 @@ import { ErrorBoundary } from 'react-error-boundary';
 
 // Your App component wrapped with ErrorBoundary
 export default function App() {
-	return (
-		<ErrorBoundary fallback={ErrorFallback}>
-			<Header />
-			<main className="py-3">
-				<Container>
-					<Outlet />
-				</Container>
-			</main>
-			<Footer />
-			<ToastContainer />
-		</ErrorBoundary>
-	);
+  return (
+    <ErrorBoundary fallback={ErrorFallback}>
+      <Header />
+      <main className="py-3">
+        <Container>
+          <Outlet />
+        </Container>
+      </main>
+      <Footer />
+      <ToastContainer />
+    </ErrorBoundary>
+  );
 }
 
 // Fall back UI when error is caught
 const ErrorFallback = ({ error, resetErrorBoundary }) => {
-	return (
-		<div role="alert">
-			<h2>Something went wrong:</h2>
-			<pre>{error?.message}</pre>
-			<button onClick={resetErrorBoundary}>Try again</button>
-		</div>
-	);
+  return (
+    <div role="alert">
+      <h2>Something went wrong:</h2>
+      <pre>{error?.message}</pre>
+      <button onClick={resetErrorBoundary}>Try again</button>
+    </div>
+  );
 };
