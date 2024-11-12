@@ -8,7 +8,6 @@ export const protect = asyncHandler(async (req, res, next) => {
 
   // Read jwt from cookie
   token = req.cookies.jwt;
-
   if (token) {
     try {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
@@ -31,6 +30,6 @@ export const admin = (req, res, next) => {
     next();
   } else {
     res.status(401);
-    throw Error("N0 authorized as admin");
+    throw Error("Not authorized as admin");
   }
 };

@@ -8,7 +8,7 @@ import userRoutes from "./routes/userRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
 import { errorHandler, notFound } from "./middleware/errorMiddleWare.js";
 import cookieParser from "cookie-parser";
-import logger from "./utils/logger.js"; 
+import logger from "./utils/logger.js";
 
 dotenv.config();
 connectDB();
@@ -34,9 +34,9 @@ app.get("/", (req, res) => {
 
 app.use("/api/products", productRoutes);
 app.use("/api/users", userRoutes);
-app.use("/api/order", orderRoutes);
+app.use("/api/orders", orderRoutes);
 
 app.use(notFound);
-  app.use(errorHandler);
+app.use(errorHandler);
 
 app.listen(port, () => console.log(`Server is running on the port: ${port}`));

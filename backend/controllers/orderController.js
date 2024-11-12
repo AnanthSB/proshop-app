@@ -15,15 +15,15 @@ const addOrderItems = asyncHandler(async (req, res) => {
     shippingPrice,
     totalPrice
   } = req.body;
-  if(!orderItems?.length){
+  if (!orderItems?.length) {
     res.status(400);
     throw new Error('No Oder Items');
-  }else{
+  } else {
     const order = new Order({
-      orderItems:orderItems?.map((x)=>({
+      orderItems: orderItems?.map((x) => ({
         ...x,
         product: x?.id,
-        _id:undefined 
+        _id: undefined
       })),
       user: req.user._id,
       shippingAddress,
@@ -44,7 +44,7 @@ const addOrderItems = asyncHandler(async (req, res) => {
 //access  Private
 const getMyOrders = asyncHandler(async (req, res) => {
   // res.send("Get my orders");
-  const orders = await Order.find({user: req.user._id});
+  const orders = await Order.find({ user: req.user._id });
   res.status(200).json(orders);
 });
 
@@ -53,11 +53,12 @@ const getMyOrders = asyncHandler(async (req, res) => {
 //access  Private
 const getOrderById = asyncHandler(async (req, res) => {
   // res.send("Get order by id");
-  const order = await Order.findById(req.params.id).populate('user','name email');
 
-  if(order){
+  const order = await Order.findById(req.params.id).populate('user', 'name email');
+
+  if (order) {
     res.status(200).json(order);
-  }else{
+  } else {
     // res.status(404).json({message: 'Order not found'});
     res.stats(404);
     throw new Error("Order not found")
