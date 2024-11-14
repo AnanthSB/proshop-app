@@ -5,7 +5,6 @@ import Order from "../models/orderModel.js";
 //@route  POST / api / orders
 //access  Private
 const addOrderItems = asyncHandler(async (req, res) => {
-  // res.send("Add order items");
   const {
     orderItems,
     shippingAddress,
@@ -22,16 +21,17 @@ const addOrderItems = asyncHandler(async (req, res) => {
     const order = new Order({
       orderItems: orderItems?.map((x) => ({
         ...x,
-        product: x?.id,
+        product: x?.id || x?._id,
         _id: undefined
       })),
-      user: req?.user?._id,
+      user: req?.user?._id || (orderItems?.length && orderItems[0]?.user),
       shippingAddress,
       paymentMethod,
       itemsPrice,
       taxPrice,
       shippingPrice,
-      totalPrice
+      totalPrice,
+      isDelivered: orderItems?.isDelivered || false
     });
     const createdOrder = await order.save();
 
