@@ -6,7 +6,6 @@ import Order from "../models/orderModel.js";
 //access  Private
 const addOrderItems = asyncHandler(async (req, res) => {
   // res.send("Add order items");
-  console.log('Cookies form "addOrderItems": ', req.getHeaders('Set-Cookies'));
   const {
     orderItems,
     shippingAddress,
@@ -15,7 +14,7 @@ const addOrderItems = asyncHandler(async (req, res) => {
     taxPrice,
     shippingPrice,
     totalPrice
-  } = req.body;
+  } = req?.body;
   if (!orderItems?.length) {
     res.status(400);
     throw new Error('No Oder Items');
@@ -26,7 +25,7 @@ const addOrderItems = asyncHandler(async (req, res) => {
         product: x?.id,
         _id: undefined
       })),
-      user: req.user._id,
+      user: req?.user?._id,
       shippingAddress,
       paymentMethod,
       itemsPrice,
@@ -45,7 +44,7 @@ const addOrderItems = asyncHandler(async (req, res) => {
 //access  Private
 const getMyOrders = asyncHandler(async (req, res) => {
   // res.send("Get my orders");
-  const orders = await Order.find({ user: req.user._id });
+  const orders = await Order.find({ user: req?.user?._id });
   res.status(200).json(orders);
 });
 
@@ -55,7 +54,7 @@ const getMyOrders = asyncHandler(async (req, res) => {
 const getOrderById = asyncHandler(async (req, res) => {
   // res.send("Get order by id");
 
-  const order = await Order.findById(req.params.id).populate('user', 'name email');
+  const order = await Order.findById(req?.params?.id).populate('user', 'name email');
 
   if (order) {
     res.status(200).json(order);
