@@ -6,6 +6,7 @@ import Order from "../models/orderModel.js";
 //access  Private
 const addOrderItems = asyncHandler(async (req, res) => {
   // res.send("Add order items");
+  console.log('Cookies form "addOrderItems": ', req.getHeaders('Set-Cookies'));
   const {
     orderItems,
     shippingAddress,

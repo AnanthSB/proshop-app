@@ -22,7 +22,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // cookie-parser middleware
-app.use(cookieParser());
+app.use(cookieParser({
+  origin: 'http://localhost:3000', // Update with your frontend URL
+  credentials: true, // Allow cookies to be included
+}));
 
 app.use(cors());
 

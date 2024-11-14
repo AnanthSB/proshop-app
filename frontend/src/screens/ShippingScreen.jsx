@@ -25,6 +25,7 @@ function ShippingScreen() {
     navigate('/payment');
     // console.log({ address, city, country, postalCode });
   };
+  const validateForm = () => address?.length && city.length && country.length && postalCode.length
 
   return (
     <FormContainer>
@@ -69,7 +70,7 @@ function ShippingScreen() {
             onChange={(e) => setCountry(e?.target?.value)}
           />
         </Form.Group>
-        <Button type="submit" variant="primary" className="my-2">
+        <Button type="submit" variant="primary" className="my-2" disabled={!validateForm}>
           Continue
         </Button>
       </Form>

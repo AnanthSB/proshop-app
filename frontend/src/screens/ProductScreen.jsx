@@ -132,7 +132,7 @@ function ProductScreen() {
                     <Button
                       className="btn-block"
                       type="button"
-                      disabled={product?.countInStock === 0}
+                      disabled={!product?.countInStock}
                       onClick={addToCartHandler}
                     >
                       Add To Cart
