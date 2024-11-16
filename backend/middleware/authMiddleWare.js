@@ -7,7 +7,6 @@ export const protect = asyncHandler(async (req, res, next) => {
   let token;
 
   // Read jwt from cookie
-  console.log(JSON.stringify(req?.cookies))
   token = req.cookies.jwt;
   if (token) {
     try {

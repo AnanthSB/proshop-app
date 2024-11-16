@@ -6,6 +6,7 @@ import {
   Route,
   RouterProvider
 } from 'react-router-dom';
+import { PayPalScriptProvider } from '@paypal/react-paypal-js';
 // import "bootstrap/dist/css/bootstrap.min.css";
 import './assets/styles/bootstrap.custom.css';
 import './assets/styles/index.css';
@@ -37,7 +38,7 @@ const router = createBrowserRouter(
         <Route path="/shipping" element={<ShippingScreen />} />
         <Route path="/payment" element={<PaymentScreen />} />
         <Route path="/placeorder" element={<PlaceOrderScreen />} />
-        <Route path="/order:id" element={<OrderScreen />} />
+        <Route path="/order/:id" element={<OrderScreen />} />
       </Route>
     </Route>
   )
@@ -47,7 +48,9 @@ root.render(
   <React.StrictMode>
     {/* <App /> */}
     <Provider store={store}>
-      <RouterProvider router={router} />
+      <PayPalScriptProvider deferLoading={true}>
+        <RouterProvider router={router} />
+      </PayPalScriptProvider>
     </Provider>
   </React.StrictMode>
 );

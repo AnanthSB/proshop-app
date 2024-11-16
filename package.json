@@ -5,6 +5,7 @@
   "type": "module",
   "main": "server.js",
   "dependencies": {
+    "@paypal/react-paypal-js": "^8.7.0",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.6",
     "dotenv": "^16.4.5",
