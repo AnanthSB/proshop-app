@@ -1,26 +1,26 @@
-import jwt from "jsonwebtoken";
-import asyncHandler from "./asyncHandler.js";
-import User from "../models/userModels.js";
+import jwt from 'jsonwebtoken';
+import asyncHandler from './asyncHandler.js';
+import User from '../models/userModels.js';
 
 // Protect routes
 export const protect = asyncHandler(async (req, res, next) => {
   let token;
 
   // Read jwt from cookie
-  token = req.cookies.jwt;
+  token = req?.cookies?.jwt;
   if (token) {
     try {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      await User.findById(decoded.userId).select("-password");
+      await User.findById(decoded.userId).select('-password');
       next();
     } catch (error) {
-      console.log(error);
+      console.log('authMiddleWare_Erros:_', error);
       res.status(401);
-      throw Error("Not authorized, token failed");
+      throw Error('Not authorized, token failed', JSON.stringify(req));
     }
   } else {
     res.status(401);
-    throw Error("Not authorized, no token");
+    throw Error('Not authorized, no token');
   }
 });
 
@@ -30,6 +30,6 @@ export const admin = (req, res, next) => {
     next();
   } else {
     res.status(401);
-    throw Error("Not authorized as admin");
+    throw Error('Not authorized as admin');
   }
 };
