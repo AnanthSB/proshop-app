@@ -1,5 +1,5 @@
-import asyncHandler from "../middleware/asyncHandler.js";
-import Order from "../models/orderModel.js";
+import asyncHandler from '../middleware/asyncHandler.js';
+import Order from '../models/orderModel.js';
 
 // desc   Create new order
 //@route  POST / api / orders
@@ -54,14 +54,17 @@ const getMyOrders = asyncHandler(async (req, res) => {
 const getOrderById = asyncHandler(async (req, res) => {
   // res.send("Get order by id");
 
-  const order = await Order.findById(req?.params?.id).populate('user', 'name email');
+  const order = await Order.findById(req?.params?.id).populate(
+    'user',
+    'name email'
+  );
 
   if (order) {
     res.status(200).json(order);
   } else {
     // res.status(404).json({message: 'Order not found'});
     res.stats(404);
-    throw new Error("Order not found")
+    throw new Error('Order not found');
   }
 });
 
@@ -78,8 +81,8 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
       id: req.body?.id,
       status: req.body?.status,
       update_time: req.body?.update_time,
-      email_address: req.body?.email_address,
-    }
+      email_address: req.body?.email_address
+    };
     const updateOrder = await order.save();
     res.status(200).json(updateOrder);
   } else {
@@ -92,14 +95,14 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
 //@route  PUT /api/orders/:id/delivery
 //access  Private/Admin
 const updateOrderToDelivered = asyncHandler(async (req, res) => {
-  res.send("Update order to delivered");
+  res.send('Update order to delivered');
 });
 
 // desc   Update all orders
 //@route  POST /api/orders
 //access  Private/Admin
 const getOrders = asyncHandler(async (req, res) => {
-  res.send("Get all orders");
+  res.send('Get all orders');
 });
 
 export {
@@ -108,5 +111,5 @@ export {
   getOrderById,
   updateOrderToPaid,
   updateOrderToDelivered,
-  getOrders,
+  getOrders
 };
