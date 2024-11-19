@@ -44,11 +44,19 @@ const router = createBrowserRouter(
   )
 );
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
+// console.log(`ClientID:_`, process.env.PAYPAL_CLIENT_ID);
 root.render(
   <React.StrictMode>
     {/* <App /> */}
     <Provider store={store}>
-      <PayPalScriptProvider deferLoading={true}>
+      <PayPalScriptProvider
+        // deferLoading={true}
+        options={{
+          clientId:
+            'AUedUJR_O8lf0FZu1XarB67m9PIBmG3VOLOIDaYFjyzb3yS6lW8YevT1hjYHRIE1_pgpgc9RDQ0vPM1J'
+        }}
+      >
         <RouterProvider router={router} />
       </PayPalScriptProvider>
     </Provider>
