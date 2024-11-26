@@ -11,7 +11,8 @@ export const protect = asyncHandler(async (req, res, next) => {
   if (token) {
     try {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      await User.findById(decoded.userId).select('-password');
+      const user = await User.findById(decoded.userId).select('-password');
+      req.user = user;
       next();
     } catch (error) {
       console.log('authMiddleWare_Erros:_', error);
@@ -26,10 +27,10 @@ export const protect = asyncHandler(async (req, res, next) => {
 
 // Admin middleware
 export const admin = (req, res, next) => {
-  if (req?.user && req?.user?.isAdmin) {
+  if (req?.user?.isAdmin) {
     next();
   } else {
     res.status(401);
-    throw Error('Not authorized as admin');
+    throw Error(`Not authorized as admin`);
   }
 };
