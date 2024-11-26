@@ -1,11 +1,16 @@
-import express from "express";
+import express from 'express';
 // import products from "../data/products.js";
-import asyncHandler from "../middleware/asyncHandler.js";
-import Product from "../models/products.js";
-import { getProductById, getProducts } from "../controllers/productController.js";
+import asyncHandler from '../middleware/asyncHandler.js';
+import Product from '../models/products.js';
+import {
+  createProduct,
+  getProductById,
+  getProducts
+} from '../controllers/productController.js';
+import { admin, protect } from '../middleware/authMiddleWare.js';
 const router = express.Router();
 
-router.route('/').get(getProducts);
+router.route('/').get(getProducts).post(protect, admin, createProduct);
 router.route('/:id').get(getProductById);
 
 // router.get(
@@ -13,7 +18,7 @@ router.route('/:id').get(getProductById);
 //   asyncHandler(async (req, res) => {
 //     const products = await Product?.find({});
 //     throw new Error('Something went wrong!');
-    
+
 //     res.json(products);
 //   })
 // );
