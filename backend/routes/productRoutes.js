@@ -4,14 +4,20 @@ import asyncHandler from '../middleware/asyncHandler.js';
 import Product from '../models/products.js';
 import {
   createProduct,
+  deleteProducts,
   getProductById,
-  getProducts
+  getProducts,
+  updateProducts
 } from '../controllers/productController.js';
 import { admin, protect } from '../middleware/authMiddleWare.js';
 const router = express.Router();
 
 router.route('/').get(getProducts).post(protect, admin, createProduct);
-router.route('/:id').get(getProductById);
+router
+  .route('/:id')
+  .get(getProductById)
+  .put(protect, admin, updateProducts)
+  .delete(protect, admin, deleteProducts);
 
 // router.get(
 //   "/",

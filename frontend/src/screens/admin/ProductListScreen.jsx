@@ -6,6 +6,7 @@ import Message from 'components/Message';
 import Loader from 'components/Loader';
 import {
   useCreateProductMutation,
+  useDeleteProductMutation,
   useGetProductsQuery
 } from 'slices/productsApiSlice';
 import { toast } from 'react-toastify';
@@ -14,9 +15,20 @@ const ProductListScreen = () => {
   const { data: products, isLoading, error, refetch } = useGetProductsQuery();
   const [createdProduct, { isLoading: loadingCreate }] =
     useCreateProductMutation();
+  const [deleteProduct, { isLoading: loadingDelete }] =
+    useDeleteProductMutation();
 
-  const deleteHandler = (id) => {
-    console.log('deleted', id);
+  const deleteHandler = async (id) => {
+    if (window.confirm('Sure you wanna delete this product?')) {
+      try {
+        const res = await deleteProduct(id).unwrap();
+        console.log(res);
+        refetch();
+        toast.success('Product Deleted Successfully!');
+      } catch (error) {
+        toast.error(error?.data?.message || error?.error);
+      }
+    }
   };
 
   const createdProductHandler = async () => {
@@ -66,11 +78,11 @@ const ProductListScreen = () => {
                 <tr key={product?._id}>
                   <td>{product?._id}</td>
                   <td>{product?.name}</td>
-                  <td>{product?.price}</td>
+                  <td>$ {product?.price}</td>
                   <td>{product?.category}</td>
                   <td>{product?.brand}</td>
                   <td>
-                    <LinkContainer to={`/admin/product/${product?._id}`}>
+                    <LinkContainer to={`/admin/product/${product?._id}/edit`}>
                       <Button variant="light" className="btn-sm mx-2">
                         <FaEdit />
                       </Button>
