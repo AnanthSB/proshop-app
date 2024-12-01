@@ -22,7 +22,6 @@ const ProductListScreen = () => {
     if (window.confirm('Sure you wanna delete this product?')) {
       try {
         const res = await deleteProduct(id).unwrap();
-        console.log(res);
         refetch();
         toast.success('Product Deleted Successfully!');
       } catch (error) {
@@ -54,6 +53,7 @@ const ProductListScreen = () => {
         </Col>
       </Row>
       {loadingCreate && <Loader />}
+      {loadingDelete && <Loader />}
       {isLoading ? (
         <Loader />
       ) : error ? (

@@ -67,13 +67,13 @@ const updateProducts = asyncHandler(async (req, res) => {
 });
 
 const deleteProducts = asyncHandler(async (req, res) => {
-  const product = await Product.findById(req.params.id);
+  const product = await Product.findByIdAndDelete(req.params.id);
 
   if (product) {
-    await product.remove({ _id: product._id });
-    res.json(200).json({ messag: 'Product deleted' });
-    const updatedProduct = await product.save();
-    res.json(updatedProduct);
+    res.status(200).json({
+      messag: 'Product deleted',
+      productDelete: product
+    });
   } else {
     res.status(404);
     throw new Error('Resource not found');
