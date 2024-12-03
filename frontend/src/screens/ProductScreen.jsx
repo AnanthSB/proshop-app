@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 // import products from 'data/products'
 import {
@@ -11,12 +11,13 @@ import {
   Row
 } from 'react-bootstrap';
 import Rating from 'components/Rating';
-import axios from 'axios';
 import { useGetProductDetailsQuery } from 'slices/productsApiSlice';
 import Loader from 'components/Loader';
 import Message from 'components/Message';
 import { useDispatch } from 'react-redux';
 import { addToCart } from 'slices/cartSlice';
+import ProductReviewScreen from './ProductReviewScreen';
+import Meta from 'components/Meta';
 function ProductScreen() {
   // const [product, setProduct] = useState([]);
   const [qty, setQty] = useState(1);
@@ -60,6 +61,11 @@ function ProductScreen() {
         </Message>
       ) : (
         <>
+          <Meta
+            image={product?.image}
+            title={product?.name}
+            description={product?.description}
+          />
           <Row>
             <Col md={5}>
               <Image src={product?.image} alt={product?.name} fluid />
@@ -144,6 +150,7 @@ function ProductScreen() {
           </Row>
         </>
       )}
+      <ProductReviewScreen />
     </>
   );
 }
